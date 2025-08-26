@@ -1,5 +1,25 @@
-from flask import Flask
+from flask import Flask, render_template #連接網頁模板render這個
 from datetime import datetime
+books={
+1:{
+"name":"Python book",
+"price":299,
+"image_url":"https://im2.book.com.tw/image/getImage?i=https://www.books.com.tw/img/CN1/136/11/CN11361197.jpg&v=58096f9ck&w=348&h=348"
+},
+
+2:{
+
+"name":"Java book",
+"price":399,
+"image_url":"https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/087/31/0010873110.jpg&v=5f7c475bk&w=348&h=348"
+},
+
+3:{
+"name":"C# book",
+"price":499,
+"image_url":"https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/036/04/0010360466.jpg&v=62d695bak&w=348&h=348"
+},
+}
 
 app = Flask(__name__)  # 開啟
 
@@ -17,10 +37,8 @@ def get_bmi(h, w):
 # 給他int是因為上面123是字串
 def get_book(id=None):  # id給他預設值None才可以去連接books
     try:
-        books = {1: "Python book", 2: "Java book", 3: "Flask book"}
-
         if id == None:
-            return books
+            return render_template("books.html",books=books)
 
         return books[id]
     except Exception as e:
@@ -30,13 +48,14 @@ def get_book(id=None):  # id給他預設值None才可以去連接books
 @app.route("/nowtime")
 def now_time():
     time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 西元年月日 時分秒
-    print(time)
-    return {"time": time}  # 只能return有容器的
+    # print(time)
+    return time  # 盡量return 
 
 
 @app.route("/")  # / 為首頁
 def index():
-    return "<h1>寫程式好難喔</h1>"
+    time=now_time()
+    return render_template("index.html",x=time,name="jerry")
 
 
 app.run(debug=True)  # 這樣才可以執行
