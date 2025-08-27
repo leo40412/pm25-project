@@ -1,24 +1,24 @@
 from flask import Flask, render_template #連接網頁模板render這個
 from datetime import datetime
-books={
-1:{
-"name":"Python book",
-"price":299,
-"image_url":"https://im2.book.com.tw/image/getImage?i=https://www.books.com.tw/img/CN1/136/11/CN11361197.jpg&v=58096f9ck&w=348&h=348"
-},
+books = {
+    1: {
+        "name": "Python book",
+        "price": 299,
+        "image_url": "https://im2.book.com.tw/image/getImage?i=https://www.books.com.tw/img/CN1/136/11/CN11361197.jpg&v=58096f9ck&w=348&h=348"
+    },
 
-2:{
+    2: {
 
-"name":"Java book",
-"price":399,
-"image_url":"https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/087/31/0010873110.jpg&v=5f7c475bk&w=348&h=348"
-},
+        "name": "Java book",
+        "price": 399,
+        "image_url": "https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/087/31/0010873110.jpg&v=5f7c475bk&w=348&h=348"
+    },
 
-3:{
-"name":"C# book",
-"price":499,
-"image_url":"https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/036/04/0010360466.jpg&v=62d695bak&w=348&h=348"
-},
+    3: {
+        "name": "C# book",
+        "price": 499,
+        "image_url": "https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/036/04/0010360466.jpg&v=62d695bak&w=348&h=348"
+    },
 }
 
 app = Flask(__name__)  # 開啟
