@@ -1,5 +1,6 @@
 from flask import Flask, render_template #連接網頁模板render這個
 from datetime import datetime
+from pm25 import get_open_data
 books = {
     1: {
         "name": "Python book",
@@ -22,6 +23,15 @@ books = {
 }
 
 app = Flask(__name__)  # 開啟
+
+@app.route("/pm25")
+def get_pm25():
+
+    values = get_open_data()
+    #print(values)
+    columns = ["站點名稱","縣市","PM2.5","更新時間","單位"]
+    return render_template("pm25.html",columns=columns,values=values)
+
 
 
 @app.route("/bmi/height=<h>&weight=<w>")
