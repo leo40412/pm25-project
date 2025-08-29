@@ -1,6 +1,7 @@
 from flask import Flask, render_template #連接網頁模板render這個
 from datetime import datetime
-from pm25 import get_data_from_mysql
+from pm25 import get_data_from_mysql,write_data_to_mysql
+import json
 books = {
     1: {
         "name": "Python book",
@@ -23,6 +24,12 @@ books = {
 }
 
 app = Flask(__name__)  # 開啟
+
+@app.route("/update-db")
+def update_db():
+    result=write_data_to_mysql()
+    
+    return json.dumps(result,ensure_ascii=False) #可以使用中文
 
 @app.route("/pm25")
 def get_pm25():
