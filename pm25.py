@@ -30,7 +30,7 @@ def open_db():
             user="avnadmin",
             password="AVNS_niEr1CxTASTTpMrZ-5P",
             port=12799,
-            database="defaultdb"
+            database="defaultdb",
         )
 
         # print(conn)
@@ -66,41 +66,32 @@ def write_to_sql():
         return size
     except Exception as e:
         print(e)
-    
+
     return 0
+
 
 def write_data_to_mysql():
     try:
         open_db()
-        size=write_to_sql()
+        size = write_to_sql()
 
-        return {
-            "result":"success",
-            "size":size
-        }
+        return {"result": "success", "size": size}
 
     except Exception as e:
         print(e)
-        return {"結果":"failure","message":str(e)}
+        return {"結果": "failure", "message": str(e)}
 
     finally:
         close_db()
 
 
-def get_data_from_mysql():
-
+def get_avg_pm25_from_mysql():
     try:
         open_db()
-        # sqlstr="select max(datacreationdate) from pm25;"
-        # cursor.execute(sqlstr)
-        # max_data=cursor.fetchone()
-        # print(max_data)
 
-        sqlstr="select site,county,pm25,datacreationdate,itemunit " \
-        "from pm25 " \
-        "where datacreationdate=(select max(datacreationdate) from pm25);"
+        sqlstr = "select county,round(avg(pm25),2) from pm25 group by county;"
         cursor.execute(sqlstr)
-        datas=cursor.fetchall()
+        datas = cursor.fetchall()
         # 去掉ID
         # datas=[data[1:] for data in datas]
 
@@ -109,8 +100,40 @@ def get_data_from_mysql():
         print(e)
     finally:
         close_db()
-    
+
     return None
 
-if __name__=="__main__":
+
+# print(get_avg_pm25_from_mysql())
+
+
+def get_data_from_mysql():
+    try:
+        open_db()
+        # sqlstr="select max(datacreationdate) from pm25;"
+        # cursor.execute(sqlstr)
+        # max_data=cursor.fetchone()
+        # print(max_data)
+
+        sqlstr = (
+            "select site,county,pm25,datacreationdate,itemunit "
+            "from pm25 "
+            "where datacreationdate=(select max(datacreationdate) from pm25);"
+        )
+        cursor.execute(sqlstr)
+        datas = cursor.fetchall()
+        # 去掉ID
+        # datas=[data[1:] for data in datas]
+
+        return datas
+    except Exception as e:
+        print(e)
+    finally:
+        close_db()
+
+    return None
+
+
+if __name__ == "__main__":
     write_data_to_mysql()
+    print(get_avg_pm25_from_mysql())
