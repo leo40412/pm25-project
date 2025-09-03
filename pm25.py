@@ -122,10 +122,13 @@ def get_data_from_mysql():
         )
         cursor.execute(sqlstr)
         datas = cursor.fetchall()
-        # 去掉ID
-        # datas=[data[1:] for data in datas]
 
-        return datas
+        # 取得不重複縣市名稱
+        sqlstr = "select distinct county from pm25;"
+        cursor.execute(sqlstr)
+        countys = [county[0] for county in cursor.fetchall()]
+
+        return datas, countys
     except Exception as e:
         print(e)
     finally:
@@ -157,5 +160,5 @@ def get_pm25_by_county(county):
 
 if __name__ == "__main__":
     # write_data_to_mysql()
-    # print(get_avg_pm25_from_mysql())
-    print(get_pm25_by_county("新北市"))
+    print(get_data_from_mysql())
+    # print(get_pm25_by_county("新北市"))
