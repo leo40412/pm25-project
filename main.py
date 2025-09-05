@@ -81,6 +81,7 @@ def update_db():
     return json.dumps(result, ensure_ascii=False)  # 可以使用中文
 
 
+@app.route("/")
 @app.route("/pm25")
 def get_pm25():
     values, countys = get_data_from_mysql()
@@ -117,10 +118,10 @@ def now_time():
     return time  # 盡量return
 
 
-@app.route("/")  # / 為首頁
-def index():
-    time = now_time()
-    return render_template("index.html", x=time, name="jerry")
+# / 為首頁
+# def index():
+#     time = now_time()
+#     return render_template("index.html", x=time, name="jerry")
 
-
-app.run(debug=True)  # 這樣才可以執行
+if __name__ == "__main__":
+    app.run(debug=False)  # 這樣才可以執行
